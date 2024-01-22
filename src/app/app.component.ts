@@ -7,4 +7,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Libri';
+
+  visualizzaFormElenco : boolean = true
+
+  cambiaVisualizzazione() {
+    this.visualizzaFormElenco = !this.visualizzaFormElenco
+  }
 }
