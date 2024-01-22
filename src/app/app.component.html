@@ -6,7 +6,7 @@
   <button (click)="cambiaVisualizzazione()">Annulla</button>
 </div>
 
-<app-elenco *ngIf="visualizzaFormElenco; else casoFalso">
+<app-elenco [elencoLibri]="elencoLibri" *ngIf="visualizzaFormElenco; else casoFalso">
 </app-elenco>
 
 

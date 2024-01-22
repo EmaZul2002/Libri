@@ -1,6 +1,11 @@
 
-<p>elenco works!</p>
+<h2>Elenco libri</h2>
 
+<hr>
+
+<li *ngFor="let libro of elencoLibri">
+    {{libro.titolo}} - {{libro.tipo}}
+</li>
 
 
 

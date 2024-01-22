@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Libro } from '../domain/Libro';
 
 @Component({
   selector: 'app-elenco',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrl: './elenco.component.css'
 })
 export class ElencoComponent {
-
+  @Input() elencoLibri : Libro[] = []
 }
