@@ -1,1 +1,18 @@
 <p>form works!</p>
+
+<hr>
+
+<input type="text" id="idTitolo" [(ngModel)] = "titolo">
+
+<br>
+
+<select name="tipo" id="idTipo" [(ngModel)] = "tipo">
+    <option value="Guida Utente">Guida Utente</option>
+    <option value="Manuale">Manuale</option>
+</select>
+
+<br>
+
+<button (click)="submit()">OK</button>
+
+<hr>
