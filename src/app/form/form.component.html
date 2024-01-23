@@ -1,18 +1,24 @@
-<h2>Inserimento libro</h2>
+<h1 mat>Inserimento libro</h1>
 
 <hr>
 
-<input type="text" id="idTitolo" [(ngModel)] = "titolo">
+<mat-form-field>
+    <mat-label>Titolo</mat-label>
+    <input matInput type="text" id="idTitolo" [(ngModel)] = "titolo">
+</mat-form-field>
 
 <br>
 
-<select name="tipo" id="idTipo" [(ngModel)] = "tipo">
-    <option value="Guida Utente">Guida Utente</option>
-    <option value="Manuale">Manuale</option>
-</select>
+<mat-form-field>
+    <mat-label>Tipo</mat-label>
+    <mat-select name="tipo" id="idTipo" [(ngModel)] = "tipo">
+        <mat-option value="Guida Utente">Guida Utente</mat-option>
+        <mat-option value="Manuale">Manuale</mat-option>
+    </mat-select>
+</mat-form-field>
 
 <br>
 
-<button (click)="submit()">Inserisci</button>
+<button (click)="submit()" mat-raised-button color="warn">Inserisci</button>
 
 <hr>

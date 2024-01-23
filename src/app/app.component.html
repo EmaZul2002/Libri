@@ -1,12 +1,13 @@
 <div *ngIf="visualizzaFormElenco">
-  <button (click)="cambiaVisualizzazione()">Aggiungi Libro</button>
+  <button (click)="cambiaVisualizzazione()" mat-raised-button color="primary">Aggiungi Libro</button>
 </div>
   
 <div *ngIf="!visualizzaFormElenco">
-  <button (click)="cambiaVisualizzazione()">Annulla</button>
+  <button (click)="cambiaVisualizzazione()" mat-raised-button color="primary">Annulla</button>
 </div>
 
-<app-elenco [elencoLibri]="elencoLibri" *ngIf="visualizzaFormElenco; else casoFalso">
+<!-- <app-elenco [elencoLibri]="elencoLibri" *ngIf="visualizzaFormElenco; else casoFalso"> -->
+<app-elenco [elencoLibri]="this.datiService.getLibri()" *ngIf="visualizzaFormElenco; else casoFalso">
 </app-elenco>
 
 
