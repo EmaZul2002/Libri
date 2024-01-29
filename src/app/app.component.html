@@ -1,4 +1,53 @@
-<div *ngIf="visualizzaFormElenco">
+<div *ngIf="visualizzaFormElenco; else casoFalso">
+  <div>
+    <button (click)="cambiaVisualizzazione()" mat-raised-button color="primary">Visualizza Elenco Libri</button>
+  </div>
+  <br>
+  <input type="number" [(ngModel)]="idJson" min="1" placeholder="Inserisci numero ID">
+
+  <button (click)="getJsonById()">Cerca libro per ID</button>
+  <button (click)="delJsonById()">Elimina libro per ID</button>
+</div>
+
+
+
+
+
+<ng-template #casoFalso>
+  <button (click)="cambiaVisualizzazione()" mat-raised-button color="primary">Indietro</button>
+  <hr>
+  <div *ngFor="let j of json$ | async">
+    User ID: {{j.userId}}
+    <br>
+    Id: {{j.id}}
+    <br>
+    Title: {{j.title}}
+    <br>
+    Completed: {{j.completed}}
+    <hr>
+  </div>
+</ng-template>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div *ngIf="visualizzaFormElenco">
   <button (click)="cambiaVisualizzazione()" mat-raised-button color="primary">Aggiungi Libro</button>
 </div>
   
@@ -6,7 +55,7 @@
   <button (click)="cambiaVisualizzazione()" mat-raised-button color="primary">Annulla</button>
 </div>
 
-<!-- <app-elenco [elencoLibri]="elencoLibri" *ngIf="visualizzaFormElenco; else casoFalso"> -->
+<app-elenco [elencoLibri]="elencoLibri" *ngIf="visualizzaFormElenco; else casoFalso">
 <app-elenco [elencoLibri]="this.datiService.getLibri()" *ngIf="visualizzaFormElenco; else casoFalso">
 </app-elenco>
 
@@ -14,4 +63,4 @@
 <ng-template #casoFalso>
   <app-form (submitEvent)="inserisciLibro($event)">
   </app-form>
-</ng-template>
+</ng-template> -->
