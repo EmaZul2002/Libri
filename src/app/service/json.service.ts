@@ -6,8 +6,9 @@ import { TipoJson } from '../domain/TipoJson';
 @Injectable({
   providedIn: 'root'
 })
+
 export class JsonService {
-  url : string = "http://jsonplaceholder.typicode.com/todos/"
+  url : string = "http://localhost:9999/api/libri"
 
   constructor(public httpClient : HttpClient) { }
 
@@ -16,11 +17,11 @@ export class JsonService {
   }
 
   getJsonById(id:number):Observable<TipoJson> {
-    return this.httpClient.get<TipoJson>(this.url+id);
+    return this.httpClient.get<TipoJson>(this.url + '/' + id);
   }
 
   deleteJsonById(id:number) {
-    return this.httpClient.delete<TipoJson>(this.url+id);
+    return this.httpClient.delete<TipoJson>(this.url + '/' + id);
   }
 
   postJson(json : TipoJson) : Observable<TipoJson> {

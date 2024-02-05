@@ -25,6 +25,7 @@ export class AppComponent {
 
   json$ : Observable<TipoJson[]>;
 
+
   //injection
   constructor(
     public datiService : DatiService,
@@ -33,8 +34,13 @@ export class AppComponent {
     //this.elencoLibri = this.datiservice.getLibri()
   }
 
+  id : number
+  titolo : string
+  autore : string
+  prezzoCopertina : number
+
   getJsonById() {
-    this.jsonService.getJsonById(this.idJson).subscribe(
+    this.jsonService.getJsonById(this.id).subscribe(
       data => {
         console.log(data)
       }
@@ -42,13 +48,29 @@ export class AppComponent {
   }
 
   delJsonById() {
-    this.jsonService.deleteJsonById(this.idJson).subscribe(
+    this.jsonService.deleteJsonById(this.id).subscribe(
       data => {
         console.log(data)
       }
     )
   }
+    
+  updateJsonById() {
+    this.jsonService.getJsonById(this.id).subscribe(
+      data => {
+        this.id = data.id
+        this.titolo=data.titolo
+        this.autore=data.autore
+        this.prezzoCopertina=data.prezzoCopertina
+      }
+    )
+  }
 
+  createJson() {
+    let libro : TipoJson
+    
+
+  }
 
 
   cambiaVisualizzazione() {

@@ -3,10 +3,16 @@
     <button (click)="cambiaVisualizzazione()" mat-raised-button color="primary">Visualizza Elenco Libri</button>
   </div>
   <br>
-  <input type="number" [(ngModel)]="idJson" min="1" placeholder="Inserisci numero ID">
+  <input type="number" [(ngModel)]="id" min="1" placeholder="Inserisci numero ID">
 
   <button (click)="getJsonById()">Cerca libro per ID</button>
   <button (click)="delJsonById()">Elimina libro per ID</button>
+  <button (click)="updateJsonById()">Modifica libro per ID</button>
+
+  ID: <input type="number" [(ngModel)]="id">
+  Titolo: <input type="text" [(ngModel)]="titolo">
+  Autore: <input type="text" [(ngModel)]="autore">
+  Prezzo Copertina: <input type="number" [(ngModel)]="prezzoCopertina">
 </div>
 
 
@@ -17,13 +23,13 @@
   <button (click)="cambiaVisualizzazione()" mat-raised-button color="primary">Indietro</button>
   <hr>
   <div *ngFor="let j of json$ | async">
-    User ID: {{j.userId}}
-    <br>
     Id: {{j.id}}
     <br>
-    Title: {{j.title}}
+    User ID: {{j.titolo}}
     <br>
-    Completed: {{j.completed}}
+    Title: {{j.autore}}
+    <br>
+    Completed: {{j.prezzoCopertina}}
     <hr>
   </div>
 </ng-template>

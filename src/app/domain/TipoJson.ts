@@ -1,6 +1,6 @@
 export interface TipoJson{
-    userId : number
     id : number
-    title : string
-    completed : boolean
+    titolo : string
+    autore : string
+    prezzoCopertina : number
 }
