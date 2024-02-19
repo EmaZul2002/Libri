@@ -3,16 +3,41 @@
     <button (click)="cambiaVisualizzazione()" mat-raised-button color="primary">Visualizza Elenco Libri</button>
   </div>
   <br>
+
+  <h3>Azioni per ID</h3>
+
   <input type="number" [(ngModel)]="id" min="1" placeholder="Inserisci numero ID">
 
   <button (click)="getJsonById()">Cerca libro per ID</button>
   <button (click)="delJsonById()">Elimina libro per ID</button>
   <button (click)="updateJsonById()">Modifica libro per ID</button>
 
-  ID: <input type="number" [(ngModel)]="id">
-  Titolo: <input type="text" [(ngModel)]="titolo">
-  Autore: <input type="text" [(ngModel)]="autore">
-  Prezzo Copertina: <input type="number" [(ngModel)]="prezzoCopertina">
+  <div *ngIf="visualizzaFormModifica">
+    ID: <input type="number" [(ngModel)]="id">
+    Titolo: <input type="text" [(ngModel)]="titolo">
+    Autore: <input type="text" [(ngModel)]="autore">
+    Prezzo Copertina: <input type="number" [(ngModel)]="prezzoCopertina">
+    <button (click)="confermaModifiche()">Conferma</button>
+    <button (click)="cambiaVisualizzazioneFormModifica()">Indietro</button>
+  </div>
+
+  
+  <hr>
+  <h3>Aggiunta Libro</h3>
+
+
+  
+  <ng-template #casoFalsoAggiunta>
+    <button (click)="cambiaVisualizzazioneFormAggiunta()">Inserisci Libro</button>
+  </ng-template>
+
+  <div *ngIf="visualizzaFormAggiunta; else casoFalsoAggiunta">
+    Titolo: <input type="text" [(ngModel)]="titolo">
+    Autore: <input type="text" [(ngModel)]="autore">
+    Prezzo Copertina: <input type="number" [(ngModel)]="prezzoCopertina">
+    <button (click)="confermaInserimento()">Conferma</button>
+    <button (click)="cambiaVisualizzazioneFormAggiunta()">Indietro</button>
+  </div>  
 </div>
 
 

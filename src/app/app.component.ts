@@ -21,9 +21,15 @@ export class AppComponent {
 
   visualizzaFormElenco : boolean = true
 
+  visualizzaFormModifica : boolean = false
+
+  visualizzaFormAggiunta : boolean = false
+
   //datiService : DatiService = new DatiService()
 
   json$ : Observable<TipoJson[]>;
+
+  libro : TipoJson
 
 
   //injection
@@ -42,7 +48,7 @@ export class AppComponent {
   getJsonById() {
     this.jsonService.getJsonById(this.id).subscribe(
       data => {
-        console.log(data)
+        alert("Libro con ID")
       }
     )
   }
@@ -56,6 +62,7 @@ export class AppComponent {
   }
     
   updateJsonById() {
+    this.cambiaVisualizzazioneFormModifica()
     this.jsonService.getJsonById(this.id).subscribe(
       data => {
         this.id = data.id
@@ -66,15 +73,49 @@ export class AppComponent {
     )
   }
 
-  createJson() {
-    let libro : TipoJson
-    
-
+  confermaModifiche() {
+    this.cambiaVisualizzazioneFormModifica()
+    this.libro = {
+      id : this.id,
+      titolo : this.titolo,
+      autore : this.autore,
+      prezzoCopertina : this.prezzoCopertina
+    }
+    this.jsonService.postJson(this.libro).subscribe(
+      data => {
+        alert("Libro modificato")
+        this.titolo = ""
+        this.autore = ""
+        this.prezzoCopertina = 0
+      }
+    )
   }
 
+  confermaInserimento() {
+    this.cambiaVisualizzazioneFormAggiunta()
+    this.libro = {
+      id : this.id,
+      titolo : this.titolo,
+      autore : this.autore,
+      prezzoCopertina : this.prezzoCopertina
+    }
+    this.jsonService.postJson(this.libro).subscribe(
+      data => {
+        alert("Libro inserito")
+      }
+    )
+  }
 
   cambiaVisualizzazione() {
     this.visualizzaFormElenco = !this.visualizzaFormElenco
+  }
+
+  cambiaVisualizzazioneFormModifica() {
+    this.visualizzaFormModifica = !this.visualizzaFormModifica
+  }
+
+  cambiaVisualizzazioneFormAggiunta() {
+    this.visualizzaFormAggiunta = !this.visualizzaFormAggiunta
   }
 
   inserisciLibro(libro : Libro) {
