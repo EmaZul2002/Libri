@@ -5,20 +5,33 @@
   <br>
 
   <h3>Azioni per ID</h3>
+ 
+  <form [formGroup]="formRicerca" (ngSubmit)="getJsonById()">
+    <input type="number" formControlName="id" min="1" placeholder="Inserisci numero ID">
 
-  <input type="number" [(ngModel)]="id" min="1" placeholder="Inserisci numero ID">
+    <button type="submit">Cerca libro per ID</button>
+    
+  </form>
+    <button (click)="delJsonById()">Elimina libro per ID</button>
+    <button (click)="updateJsonById()">Modifica libro per ID</button>
+  
 
-  <button (click)="getJsonById()">Cerca libro per ID</button>
-  <button (click)="delJsonById()">Elimina libro per ID</button>
-  <button (click)="updateJsonById()">Modifica libro per ID</button>
+
+  <div *ngIf="visualizzaLibroCercato">
+
+  </div>
 
   <div *ngIf="visualizzaFormModifica">
-    ID: <input type="number" [(ngModel)]="id">
-    Titolo: <input type="text" [(ngModel)]="titolo">
-    Autore: <input type="text" [(ngModel)]="autore">
-    Prezzo Copertina: <input type="number" [(ngModel)]="prezzoCopertina">
-    <button (click)="confermaModifiche()">Conferma</button>
-    <button (click)="cambiaVisualizzazioneFormModifica()">Indietro</button>
+    <form [formGroup]="formModifica" (ngSubmit)="confermaModifiche()">
+      <hr>
+      <h3>Modifica libro</h3>
+      ID: <input type="number" [disabled]="true" formControlName="id">
+      Titolo: <input type="text" formControlName="titolo">
+      Autore: <input type="text" formControlName="autore">
+      Prezzo Copertina: <input type="number" formControlName="prezzoCopertina">
+      <button type="submit">Conferma</button>
+      <button (click)="cambiaVisualizzazioneFormModifica()">Indietro</button>
+    </form>
   </div>
 
   
@@ -31,12 +44,15 @@
     <button (click)="cambiaVisualizzazioneFormAggiunta()">Inserisci Libro</button>
   </ng-template>
 
+  
   <div *ngIf="visualizzaFormAggiunta; else casoFalsoAggiunta">
-    Titolo: <input type="text" [(ngModel)]="titolo">
-    Autore: <input type="text" [(ngModel)]="autore">
-    Prezzo Copertina: <input type="number" [(ngModel)]="prezzoCopertina">
-    <button (click)="confermaInserimento()">Conferma</button>
-    <button (click)="cambiaVisualizzazioneFormAggiunta()">Indietro</button>
+    <form [formGroup]="formAggiunta" (ngSubmit)="confermaInserimento()">
+      Titolo: <input type="text" formControlName="titolo">
+      Autore: <input type="text" formControlName="autore">
+      Prezzo Copertina: <input type="number" formControlName="prezzoCopertina">
+      <button type="submit">Conferma</button>
+      <button (click)="cambiaVisualizzazioneFormAggiunta()">Indietro</button>
+    </form>
   </div>  
 </div>
 

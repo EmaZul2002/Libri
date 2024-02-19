@@ -1,16 +1,17 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Libro } from './domain/Libro';
 import { DatiService } from './service/dati.service';
 import { JsonService } from './service/json.service';
 import { Observable } from 'rxjs';
 import { TipoJson } from './domain/TipoJson';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   title = 'Libri';
 
   idJson : number = 1
@@ -24,6 +25,8 @@ export class AppComponent {
   visualizzaFormModifica : boolean = false
 
   visualizzaFormAggiunta : boolean = false
+
+  visualizzaLibroCercato : boolean = false
 
   //datiService : DatiService = new DatiService()
 
@@ -40,46 +43,76 @@ export class AppComponent {
     //this.elencoLibri = this.datiservice.getLibri()
   }
 
+  ngOnInit() {
+    this.formModifica = new FormGroup({
+      id : new FormControl('', [Validators.required, Validators.min(1)]),
+      titolo : new FormControl('', [Validators.required]),
+      autore : new FormControl('', [Validators.required]),
+      prezzoCopertina : new FormControl('', [Validators.required, Validators.min(0)])
+    })
+
+    this.formAggiunta = new FormGroup({
+      titolo : new FormControl('', [Validators.required]),
+      autore : new FormControl('', [Validators.required]),
+      prezzoCopertina : new FormControl('', [Validators.required, Validators.min(0)])
+    })
+
+    this.formRicerca = new FormGroup({
+      id : new FormControl('', [Validators.required, Validators.min(1)]) 
+    })
+  }
+
   id : number
   titolo : string
   autore : string
   prezzoCopertina : number
 
-  getJsonById() {
-    this.jsonService.getJsonById(this.id).subscribe(
-      data => {
-        alert("Libro con ID")
-      }
-    )
-  }
+  formModifica : FormGroup
+  formAggiunta : FormGroup
+  formRicerca : FormGroup
 
-  delJsonById() {
-    this.jsonService.deleteJsonById(this.id).subscribe(
+  
+
+  getJsonById() {
+    this.jsonService.getJsonById(this.formRicerca.get('id').value).subscribe(
       data => {
         console.log(data)
       }
     )
   }
-    
-  updateJsonById() {
-    this.cambiaVisualizzazioneFormModifica()
-    this.jsonService.getJsonById(this.id).subscribe(
+
+  delJsonById() {
+    this.jsonService.deleteJsonById(this.formRicerca.get('id').value).subscribe(
       data => {
-        this.id = data.id
-        this.titolo=data.titolo
-        this.autore=data.autore
-        this.prezzoCopertina=data.prezzoCopertina
+        alert("Libro con ID " + this.formRicerca.get('id').value + " rimosso")
       }
     )
+  }
+    
+  updateJsonById() {
+    if (this.formRicerca.get('id').value != null) {
+      this.cambiaVisualizzazioneFormModifica()
+    this.jsonService.getJsonById(this.formRicerca.get('id').value).subscribe(
+      data => {
+        this.formModifica.get('id').setValue(data.id)
+        this.formModifica.get('titolo').setValue(data.titolo)
+        this.formModifica.get('autore').setValue(data.autore)
+        this.formModifica.get('prezzoCopertina').setValue(data.prezzoCopertina)
+      }
+    )
+    } else {
+      alert("Campo ID non valido, inserire un valore per eseguire la modifica")
+    }
+    
   }
 
   confermaModifiche() {
     this.cambiaVisualizzazioneFormModifica()
     this.libro = {
-      id : this.id,
-      titolo : this.titolo,
-      autore : this.autore,
-      prezzoCopertina : this.prezzoCopertina
+      id : this.formModifica.get('id').value,
+      titolo : this.formModifica.get('titolo').value,
+      autore : this.formModifica.get('autore').value,
+      prezzoCopertina : this.formModifica.get('prezzoCopertina').value
     }
     this.jsonService.postJson(this.libro).subscribe(
       data => {
@@ -94,11 +127,12 @@ export class AppComponent {
   confermaInserimento() {
     this.cambiaVisualizzazioneFormAggiunta()
     this.libro = {
-      id : this.id,
-      titolo : this.titolo,
-      autore : this.autore,
-      prezzoCopertina : this.prezzoCopertina
+      id : 0,
+      titolo : this.formAggiunta.get('titolo').value,
+      autore : this.formAggiunta.get('autore').value,
+      prezzoCopertina : this.formAggiunta.get('prezzoCopertina').value
     }
+    delete this.libro.id
     this.jsonService.postJson(this.libro).subscribe(
       data => {
         alert("Libro inserito")
@@ -116,6 +150,10 @@ export class AppComponent {
 
   cambiaVisualizzazioneFormAggiunta() {
     this.visualizzaFormAggiunta = !this.visualizzaFormAggiunta
+  }
+
+  cambiaVisualizzazioneCerca() {
+    this.visualizzaLibroCercato = !this.visualizzaLibroCercato
   }
 
   inserisciLibro(libro : Libro) {
